@@ -1,4 +1,5 @@
 require 'csv'
+require_relative '../lib/attendee_repository.rb'
 
 class DataHandler
 
@@ -29,10 +30,10 @@ class DataHandler
   end
 
   def clean_city(city)
-    city.downcase
+    city.to_s.downcase
   end
 
   def clean_state(state)
-    state.upcase
+    state.to_s.upcase
   end
 end
