@@ -62,6 +62,10 @@ class DataHandlerTest < Minitest::Test
     assert_equal "1234567890", data_handler.clean_phone_number("(123) 456-7890")
   end
 
+  def test_non_digits_are_removed_from_a_phone_number
+    assert_equal "98200", data_handler.clean_phone_number("9.82E+00")
+  end
+  
   def test_a_good_city_is_not_changed
     assert_equal "denver", data_handler.clean_city("denver")
   end
