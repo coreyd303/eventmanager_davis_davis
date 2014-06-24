@@ -1,4 +1,4 @@
-require 'pry'
+require 'csv'
 gem 'minitest', '~>5.2'
 require 'minitest/autorun'
 require 'minitest/pride'
@@ -8,7 +8,7 @@ class SearchTest < Minitest::Test
   attr_reader :search
 
   def setup
-    @search = Search.new
+    @search = Search.new("./test/fixtures/sample_data.csv")
   end
 
   def test_it_exists
@@ -20,13 +20,12 @@ class SearchTest < Minitest::Test
   end
 
   def test_it_can_add_a_result
-    result = @search.find_by_first_name("allison")
+    result = search.find_by_first_name("allison")
 
     assert_equal 1, result.count
   end
 
   def test_it_can_add_another_result
-    search = Search.new
     result = search.find_by_first_name("john")
     result = search.find_by_first_name("allison")
     assert_equal 2, result.count

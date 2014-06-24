@@ -12,6 +12,6 @@ class AttendeeRepository < Minitest::Test
   def test_it_exists
     assert Queue
   end
-
+  
   #not sure what to test here
 end

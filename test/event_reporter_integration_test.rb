@@ -20,8 +20,9 @@ class EventReporterIntegrationTest < Minitest::Test
   end
 
   def test_it_loads_a_csv_document
-    
+
   end
+  
   # def test_it_can_pass_loaded_contents_into_the_data_queue
   #   handler = DataHandler.new
   #   queue = AttendeeRepository.new

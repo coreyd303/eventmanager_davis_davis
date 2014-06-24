@@ -4,9 +4,9 @@ require './lib/attendee_repository'
 class Search
   attr_reader :results, :attendees
 
-  def initialize
+  def initialize(filename)
     @results   = []
-    repository = AttendeeRepository.new
+    repository = AttendeeRepository.new(filename)
     repository.build_attendees
     @attendees = repository.attendees
   end
