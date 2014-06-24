@@ -1,11 +1,13 @@
 require './lib/attendee_repository'
 require './lib/search'
+require 'pry'
 
 class CLI
   attr_reader :data, :queue, :search
 
   def initialize
-    @queue = []
+    @queue  = []
+    @search = nil
   end
 
   def help
@@ -34,12 +36,16 @@ class CLI
     else
       filename = filename
     end
+
     @search = Search.new(filename)
     puts "Your file, #{filename}, has been loaded."
   end
 
   def find(attribute, criteria)
-    @search.find
+    criteria = criteria.first.downcase
+    results = search.send("find_by_#{attribute}", criteria)
+    @queue << results
+    @queue.flatten!
   end
 
   def queue_count
@@ -52,6 +58,7 @@ class CLI
   end
 
   def queue_print
+    print @queue
   end
 
   def queue_print_by(attribute)
@@ -69,6 +76,8 @@ class CLI
       input = gets.strip
       parts = input.split(" ")
       @command = parts[0]
+      parameter = parts[1]
+      argument = parts[2..-1]
       case @command
       when "help" then help
       # when "command help" then command_help(command)
@@ -76,10 +85,10 @@ class CLI
       #needs to accept "queue count"
       when "queue_count" then queue_count
       when "queue_clear" then queue_clear
-      # when "queue print" then
+      when "queue_print" then queue_print
       # when "queue print by" print_by(attribute)
       # when "queue save to" then queue_save_to(filename.csv)
-      # when "find" then find(attribute, criteria)
+      when "find" then find(parameter, argument)
       when "quit" then puts "Have a nice a day!"
       else
         puts "Sorry, #{@command} is an invalid command."
