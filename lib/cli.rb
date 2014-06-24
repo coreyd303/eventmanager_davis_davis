@@ -22,11 +22,22 @@ class CLI
   end
 
   def help
+    print "\n" +
     "Welcome to Event Reporter's help section. If you would like more information on an available command, enter 'Command Help' followed by the command name.\n" +
-    "Here are the commands available to you:\n"
+    "Here are the commands available to you:\n" +
+    "'command help'\n" +
+    "'load'\n" +
+    "'find'\n" +
+    "'result_count'\n" +
+    "'result_clear'\n" +
+    "'result_print'\n" +
+    "'result_print_by'\n" +
+    "'result_save_to'\n"
   end
 
   def command_help(command)
+    print "\n" +
+    
   end
 
   def load(filename=event_attendess.csv)
@@ -35,42 +46,48 @@ class CLI
   def find(attribute, criteria)
   end
 
-  def queue_count
+  def result_count
   end
 
-  def queue_clear
+  def result_clear
   end
 
-  def queue_print
+  def result_print
   end
 
-  def queue_print_by(attribute)
+  def result_print_by(attribute)
   end
 
-  def queue_save_to(filename)
+  def result_save_to(filename)
   end
 
   def run
-    puts "Welcome to Event Reporter! Enter 'help' for a list of available commands."
+    puts "Welcome to Event Reporter. Enter 'help' for a list of available commands."
     command = ""
-    command = parts[0]
-    while command != "q"
+    until @command == "quit"
       puts ""
-      printf "Enter Command:"
-      case command
-      when "load" then load<filename>
+      printf "Enter Command: "
+      input = gets.chomp
+      parts = input.split(" ")
+      @command = parts[0]
+      case @command
       when "help" then help
-      when "command help" then command_help(command)
-      when "queue count" then
-      when "queue clear" then
-      when "queue print" then
-      when "queue print by" print_by(attribute)
-      when "queue save to" then queue_save_to(filename.csv)
-      when "find" then find(attribute, criteria)
-    else
-      puts "Sorry, #{command} is an invalid command."
+      # when "command help" then command_help(command)
+      # when "load" then load<filename>
+      # when "search count" then
+      # when "search clear" then
+      # when "search print" then
+      # when "search print by" print_by(attribute)
+      # when "queue save to" then queue_save_to(filename.csv)
+      # when "find" then find(attribute, criteria)
+      when "quit" then "Have a nice a day!"
+      else
+        puts "Sorry, #{command} is an invalid command."
+      end
     end
   end
 
-
 end
+
+cli = CLI.new
+cli.run
