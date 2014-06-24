@@ -3,7 +3,7 @@ require './lib/data_handler'
 
 
 class Attendee
-  attr_reader :handler, :first_name, :last_name, :phone, :city, :state  # => nil
+  attr_reader :handler, :first_name, :last_name, :phone, :city, :state, :zipcode  # => nil
 
   def initialize(row)
     @handler     = DataHandler.new
@@ -12,5 +12,6 @@ class Attendee
     @phone       = handler.clean_phone_number(row[:homephone])
     @city        = handler.clean_city(row[:city])
     @state       = handler.clean_state(row[:state])
+    @zipcode     = handler.clean_zipcode(row[:zipcode])
   end
 end
