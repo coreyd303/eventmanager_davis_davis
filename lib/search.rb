@@ -1,5 +1,5 @@
-require_relative '../lib/attendee_repository.rb'
-require_relative '../lib/data_handler.rb'
+require './lib/attendee_repository'
+# require './lib/data_handler'
 
 class Search
   attr_reader :results, :attendees
@@ -24,7 +24,7 @@ class Search
   end
 
   def find_by_city(city)
-    @results << @attendees.select {|attendee| attendee.city == last_city}
+    @results << @attendees.select {|attendee| attendee.city == city}
   end
 
   def find_by_state(state)

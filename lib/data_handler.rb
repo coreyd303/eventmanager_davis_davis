@@ -1,5 +1,5 @@
 require 'csv'
-require_relative '../lib/attendee_repository.rb'
+require './lib/attendee_repository'
 
 class DataHandler
 

@@ -1,9 +1,9 @@
 gem 'minitest', '~>5.2'
 require 'minitest/autorun'
 require 'minitest/pride'
-require './lib/queue.rb'
+require './lib/attendee_repository'
 
-class QueueTest < Minitest::Test
+class AttendeeRepository < Minitest::Test
 
   def setup
     @queue = Queue.new
@@ -13,7 +13,5 @@ class QueueTest < Minitest::Test
     assert Queue
   end
 
-  def test_I_cant_write_tests
-    assert 
-  end
+  #not sure what to test here
 end

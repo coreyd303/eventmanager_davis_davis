@@ -2,7 +2,7 @@ require 'pry'
 gem 'minitest', '~>5.2'
 require 'minitest/autorun'
 require 'minitest/pride'
-require './lib/search.rb'
+require './lib/search'
 
 class SearchTest < Minitest::Test
   attr_reader :search
@@ -31,8 +31,5 @@ class SearchTest < Minitest::Test
     result = search.find_by_first_name("allison")
     assert_equal 2, result.count
   end
-
-  
-
 
 end

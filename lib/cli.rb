@@ -3,7 +3,7 @@
 # after a command completes, the prompt returns and awaits another instruction
 #
 # the queue:
-# holds the stored results from a seach
+# holds the stored results from a search
 # is not cleared unless the user runs the command 'queue clear' or a new find command
 #
 # commands:
@@ -25,22 +25,25 @@ class CLI
     print "\n" +
     "Welcome to Event Reporter's help section. If you would like more information on an available command, enter 'Command Help' followed by the command name.\n" +
     "Here are the commands available to you:\n" +
+    "\n" +
     "'command help'\n" +
     "'load'\n" +
     "'find'\n" +
-    "'result_count'\n" +
-    "'result_clear'\n" +
-    "'result_print'\n" +
-    "'result_print_by'\n" +
-    "'result_save_to'\n"
+    "'result count'\n" +
+    "'result clear'\n" +
+    "'result print'\n" +
+    "'result print_by'\n" +
+    "'result save_to'\n"
   end
 
   def command_help(command)
-    print "\n" +
-    
+    print "\n"
+
+
   end
 
-  def load(filename=event_attendess.csv)
+  def load(filename='event_attendess.csv')
+    CSV.open(filename, headers: true, header_converters: :symbol)
   end
 
   def find(attribute, criteria)
@@ -80,7 +83,7 @@ class CLI
       # when "search print by" print_by(attribute)
       # when "queue save to" then queue_save_to(filename.csv)
       # when "find" then find(attribute, criteria)
-      when "quit" then "Have a nice a day!"
+      when "quit" then puts "Have a nice a day!"
       else
         puts "Sorry, #{command} is an invalid command."
       end

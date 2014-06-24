@@ -1,5 +1,5 @@
 require 'csv'
-require_relative '../lib/attendee.rb'
+require './lib/attendee.rb'
 
 class AttendeeRepository
   attr_reader :csv, :attendees
