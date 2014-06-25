@@ -14,24 +14,33 @@ class CLI
     @search = nil
   end
 
-  def help
-    if print "\n" +
+  def help(command)
+    if command == nil
+      print "\n" +
       "Welcome to Event Reporter's help section. If you would like more information on an available command, enter 'Command Help' followed by the command name.\n" +
       "Here are the commands available to you:\n" +
       "\n" +
-      "'command help'\n" +
       "'load'\n" +
       "'find'\n" +
-      "'result count'\n" +
-      "'result clear'\n" +
-      "'result print'\n" +
-      "'result print_by'\n" +
-      "'result save_to'\n"
-    end
-  end
+      "'queue count'\n" +
+      "'queue clear'\n" +
+      "'queue print'\n" +
+      "'queue print_by'\n" +
+      "'queue save_to'\n"
+    elsif command == "load"
+      print "Erase any loaded data and parse the specified file. If no filename is given, default to 'event_attendees.csv'."
+    elsif command == "find"
+      print "Load the queue with all records matching the criteria for the given attribute."
+    elsif command == "queue count"
+      print "Output how many records are in the current queue."
+    elsif command == "queue clear"
+      print "Empty the queue."
+    elsif command == "queue print"
+      "Print out a tab-delimited data table."
+    elsif command == "print_by"
 
-  def command_help(command)
-    print "\n"
+    elsif command == "save_to"
+    end
   end
 
   def load(filename)
@@ -45,7 +54,11 @@ class CLI
   end
 
   def find(attribute, criteria)
-    criteria = criteria.first.downcase
+    @queue = []
+    criteria = criteria.each do |c|
+      c.downcase
+    end
+    criteria = criteria.join(' ')
     results = search.send("find_by_#{attribute}", criteria)
     @queue << results
     @queue.flatten!
@@ -104,6 +117,7 @@ class CLI
         csv << [entry.id,entry.regdate,entry.last_name,entry.first_name,entry.email,entry.zipcode,entry.city,entry.state,entry.address,entry.phone]
       end
     end
+    puts "Your queue has been save to '#{filename}'."
   end
 
   def run
@@ -118,11 +132,10 @@ class CLI
       parameter = parts[1]
       argument = parts[2..-1]
       case @command
-      when "help" then help
-      # when "command help" then command_help(command)
+      when "help" then help(parameter)
       when "load" then load(parts[1])
       #needs to accept "queue count"
-      when "queue_count" then queue_count
+      when "queue count" then queue_count
       when "queue_clear" then queue_clear
       when "queue_print" then queue_print
       when "queue_print_by" then queue_print_by(parameter)
