@@ -1,7 +1,6 @@
-# require './lib/attendee.rb'
-
 class AttendeeRepository
-  attr_reader :csv, :attendees
+  attr_reader :csv,
+              :attendees
 
   def initialize(filename='./event_attendees.csv')
     @csv = CSV.open(filename, headers: true, header_converters: :symbol)

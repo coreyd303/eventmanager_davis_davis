@@ -1,6 +1,5 @@
 require './lib/data_handler'
 
-
 class Attendee
   attr_reader :handler,
               :first_name,
@@ -27,5 +26,4 @@ class Attendee
     @state       = handler.clean_state(row[:state])
     @zipcode     = handler.clean_zipcode(row[:zipcode])
   end
-
 end
