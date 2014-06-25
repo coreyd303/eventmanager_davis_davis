@@ -58,7 +58,15 @@ class CLI
   end
 
   def queue_print
-    print @queue
+    header = ""
+    column_names = ["LAST NAME", "FIRST NAME", "EMAIL", "ZIPCODE", "CITY", "STATE", "ADDRESS", "PHONE"]
+    column_names.each do |title|
+      header += title.center(20)
+    end
+    print header
+    @queue.each do |a| #START HERE!!!!!!
+      puts "#{a.last_name.capitalize} #{a.first_name.capitalize} #{a.zipcode} #{a.city.capitalize} #{a.state} #{a.homephone}"
+    end
   end
 
   def queue_print_by(attribute)
