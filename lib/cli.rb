@@ -121,6 +121,26 @@ class CLI
     puts "Your queue has been save to '#{filename}'."
   end
 
+  def queue_command(params)
+    command = params[0]
+
+    case command
+    when "count" then queue_count
+    when "clear" then queue_clear
+    when "print" then queue_print_command(params[1..-1])
+    when "save" then queue_save_to(params[2])
+    end
+  end
+
+  def queue_print_command(params)
+    if params.empty?
+      queue_print
+    else
+      # TODO: Deal with
+      queue_print_by(params[1])
+    end
+  end
+
   def run
     puts "Welcome to Event Reporter. Enter 'help' for a list of available commands."
     command = ""
@@ -135,11 +155,7 @@ class CLI
       case @command
       when "help" then help(parameter)
       when "load" then load(parts[1])
-      when "queue_count" then queue_count
-      when "queue_clear" then queue_clear
-      when "queue_print" then queue_print
-      when "queue_print_by" then queue_print_by(parameter)
-      when "queue_save_to" then queue_save_to(parameter)
+      when "queue" then queue_command(parts[1..-1])
       when "find" then find(parameter, argument)
       when "quit" then puts "Have a nice a day!"
       else
