@@ -1,6 +1,8 @@
 require './lib/attendee_repository'
 require './lib/search'
 require 'pry'
+require 'terminal-table'
+require 'colorize'
 
 class CLI
   attr_reader :data, :queue, :search
@@ -58,15 +60,34 @@ class CLI
   end
 
   def queue_print
-    header = ""
-    column_names = ["LAST NAME", "FIRST NAME", "EMAIL", "ZIPCODE", "CITY", "STATE", "ADDRESS", "PHONE"]
-    column_names.each do |title|
-      header += title.center(20)
+    rows = []
+    @queue.each do |a|
+      rows << ["#{a.last_name.capitalize}",
+               "#{a.first_name.capitalize}",
+               #"#{a.email}",
+               "#{a.zipcode}",
+               "#{a.city.capitalize}",
+               "#{a.state}",
+               #"#{a.address}",
+               "#{a.phone}"]
     end
-    print header
-    @queue.each do |a| #START HERE!!!!!!
-      puts "#{a.last_name.capitalize} #{a.first_name.capitalize} #{a.zipcode} #{a.city.capitalize} #{a.state} #{a.homephone}"
-    end
+    table = Terminal::Table.new :headings => ['LAST NAME'.bold,
+                                              'FIRST NAME'.bold,
+                                              #'EMAIL',
+                                              'ZIPCODE'.bold,
+                                              'CITY'.bold,
+                                              'STATE'.bold,
+                                              #'ADDRESS',
+                                              'PHONE'.bold],
+                                              :rows => rows
+    puts table
+    # header = ""
+    # column_names = ["LAST NAME", "FIRST NAME", "EMAIL", "ZIPCODE", "CITY", "STATE", "ADDRESS", "PHONE"]
+    # column_names.each do |title|
+    #   header += title.center(20)
+    # end
+    # print header
+
   end
 
   def queue_print_by(attribute)
