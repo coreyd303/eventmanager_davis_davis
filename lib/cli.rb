@@ -38,8 +38,9 @@ class CLI
     elsif command == "queue print"
       "Print out a tab-delimited data table."
     elsif command == "print_by"
-
+      print "Print the data table sorted by the specified attribute."
     elsif command == "save_to"
+      print "Export the current queue to the specified filename as a CSV."
     end
   end
 
@@ -126,7 +127,7 @@ class CLI
     until @command == "quit"
       puts ""
       printf "Enter Command: "
-      input = gets.strip
+      input = gets.downcase.strip
       parts = input.split(" ")
       @command = parts[0]
       parameter = parts[1]
@@ -134,8 +135,7 @@ class CLI
       case @command
       when "help" then help(parameter)
       when "load" then load(parts[1])
-      #needs to accept "queue count"
-      when "queue count" then queue_count
+      when "queue_count" then queue_count
       when "queue_clear" then queue_clear
       when "queue_print" then queue_print
       when "queue_print_by" then queue_print_by(parameter)
