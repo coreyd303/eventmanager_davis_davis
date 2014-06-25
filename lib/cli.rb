@@ -3,6 +3,7 @@ require './lib/search'
 require 'pry'
 require 'terminal-table'
 require 'colorize'
+require 'csv'
 
 class CLI
   attr_reader :data, :queue, :search, :table, :queue_print
@@ -97,31 +98,11 @@ class CLI
   end
 
   def queue_save_to(filename)
-    CSV.open(@filename, "wb") do |csv|
-      csv.puts
-        rows = []
-        @queue.each do |a|
-          rows << ["#{a.id}",
-                   "#{a.regdate}",
-                   "#{a.last_name.capitalize}",
-                   "#{a.first_name.capitalize}",
-                   "#{a.email}",
-                   "#{a.zipcode}",
-                   "#{a.city.capitalize}",
-                   "#{a.state}",
-                   "#{a.address}",
-                   "#{a.phone}"]
-        end
-        table = Terminal::Table.new :headings => ['LAST NAME'.bold,
-                                                  'FIRST NAME'.bold,
-                                                  #'EMAIL',
-                                                  'ZIPCODE'.bold,
-                                                  'CITY'.bold,
-                                                  'STATE'.bold,
-                                                  #'ADDRESS',
-                                                  'PHONE'.bold],
-                                                  :rows => rows
-        csv.puts table
+    CSV.open(filename, "w") do |csv|
+      csv << ['ID','REGDATE','LAST NAME','FIRST NAME','EMAIL','ZIPCODE','CITY','STATE','ADDRESS','PHONE']
+      queue.each do |entry|
+        csv << [entry.id,entry.regdate,entry.last_name,entry.first_name,entry.email,entry.zipcode,entry.city,entry.state,entry.address,entry.phone]
+      end
     end
   end
 
@@ -155,6 +136,3 @@ class CLI
   end
 
 end
-
-cli = CLI.new
-cli.run
