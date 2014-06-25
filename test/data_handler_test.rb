@@ -65,7 +65,7 @@ class DataHandlerTest < Minitest::Test
   def test_non_digits_are_removed_from_a_phone_number
     assert_equal "98200", data_handler.clean_phone_number("9.82E+00")
   end
-  
+
   def test_a_good_city_is_not_changed
     assert_equal "denver", data_handler.clean_city("denver")
   end
@@ -86,4 +86,23 @@ class DataHandlerTest < Minitest::Test
     assert_equal "CO", data_handler.clean_state("Co")
   end
 
+  def test_it_returns_an_id_number
+    assert_equal "1", data_handler.clean_id("1")
+  end
+
+  def test_it_can_clean_a_registration_date
+    assert_equal "11/12/08", data_handler.clean_registration_date("11/12/08")
+  end
+
+  def test_it_can_clean_a_street_address
+    assert_equal "1509 Jackson Street", data_handler.clean_address("1509 Jackson Street")
+  end
+
+  def test_it_can_return_a_valid_email_address
+    assert_equal "arannon@jumpstartlab.com", data_handler.clean_email("arannon@jumpstartlab.com")
+  end
+
+  def test_it_can_reject_an_invalid_email_adress
+    assert_equal nil, data_handler.clean_email("this is not an email")
+  end
 end
