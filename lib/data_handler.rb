@@ -1,7 +1,4 @@
-# require 'csv'
-# require './lib/attendee_repository'
-# require 'rubygems'
-# require 'ValidateEmail'
+require './lib/attendee_repository'
 
 class DataHandler
 

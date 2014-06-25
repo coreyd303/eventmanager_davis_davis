@@ -1,4 +1,3 @@
-require 'csv'
 require './lib/data_handler'
 
 
