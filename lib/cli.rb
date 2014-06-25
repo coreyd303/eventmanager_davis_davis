@@ -5,7 +5,8 @@ require 'terminal-table'
 require 'colorize'
 
 class CLI
-  attr_reader :data, :queue, :search
+  attr_reader :data, :queue, :search, :table
+  attr_writer :filename
 
   def initialize
     @queue  = []
@@ -48,6 +49,8 @@ class CLI
     results = search.send("find_by_#{attribute}", criteria)
     @queue << results
     @queue.flatten!
+    print "The queue has been loaded with the results of your search for '#{attribute}' '#{criteria}'.\n" +
+    "There were #{queue.count} results.\n"
   end
 
   def queue_count
@@ -81,19 +84,37 @@ class CLI
                                               'PHONE'.bold],
                                               :rows => rows
     puts table
-    # header = ""
-    # column_names = ["LAST NAME", "FIRST NAME", "EMAIL", "ZIPCODE", "CITY", "STATE", "ADDRESS", "PHONE"]
-    # column_names.each do |title|
-    #   header += title.center(20)
-    # end
-    # print header
-
   end
 
   def queue_print_by(attribute)
+
   end
 
   def queue_save_to(filename)
+    CSV.open(@filename, "wb") do |csv|
+      csv.puts
+        rows = []
+        @queue.each do |a|
+          rows << ["#{a.last_name.capitalize}",
+                   "#{a.first_name.capitalize}",
+                   #"#{a.email}",
+                   "#{a.zipcode}",
+                   "#{a.city.capitalize}",
+                   "#{a.state}",
+                   #"#{a.address}",
+                   "#{a.phone}"]
+        end
+        table = Terminal::Table.new :headings => ['LAST NAME'.bold,
+                                                  'FIRST NAME'.bold,
+                                                  #'EMAIL',
+                                                  'ZIPCODE'.bold,
+                                                  'CITY'.bold,
+                                                  'STATE'.bold,
+                                                  #'ADDRESS',
+                                                  'PHONE'.bold],
+                                                  :rows => rows
+        csv.puts table
+    end
   end
 
   def run
@@ -116,7 +137,7 @@ class CLI
       when "queue_clear" then queue_clear
       when "queue_print" then queue_print
       # when "queue print by" print_by(attribute)
-      # when "queue save to" then queue_save_to(filename.csv)
+      when "queue_save_to" then queue_save_to(parameter)
       when "find" then find(parameter, argument)
       when "quit" then puts "Have a nice a day!"
       else
