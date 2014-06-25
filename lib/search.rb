@@ -1,6 +1,3 @@
-# require './lib/attendee_repository'
-# require './lib/data_handler'
-
 class Search
   attr_reader :results, :attendees
 
