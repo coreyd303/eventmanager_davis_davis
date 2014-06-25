@@ -5,7 +5,7 @@ require 'terminal-table'
 require 'colorize'
 
 class CLI
-  attr_reader :data, :queue, :search, :table
+  attr_reader :data, :queue, :search, :table, :queue_print
   attr_writer :filename
 
   def initialize
@@ -39,7 +39,6 @@ class CLI
     else
       filename = filename
     end
-
     @search = Search.new(filename)
     puts "Your file, #{filename}, has been loaded."
   end
@@ -65,29 +64,36 @@ class CLI
   def queue_print
     rows = []
     @queue.each do |a|
-      rows << ["#{a.last_name.capitalize}",
-               "#{a.first_name.capitalize}",
-               #"#{a.email}",
-               "#{a.zipcode}",
-               "#{a.city.capitalize}",
-               "#{a.state}",
-               #"#{a.address}",
-               "#{a.phone}"]
+    rows << ["#{a.id}",
+             "#{a.regdate}",
+             "#{a.last_name.capitalize}",
+             "#{a.first_name.capitalize}",
+             "#{a.email}",
+             "#{a.zipcode}",
+             "#{a.city.capitalize}",
+             "#{a.state}",
+             "#{a.address}",
+             "#{a.phone}"]
     end
-    table = Terminal::Table.new :headings => ['LAST NAME'.bold,
+    table = Terminal::Table.new :headings => ['ID'.bold,
+                                              'REGDATE'.bold,
+                                              'LAST NAME'.bold,
                                               'FIRST NAME'.bold,
-                                              #'EMAIL',
+                                              'EMAIL'.bold,
                                               'ZIPCODE'.bold,
                                               'CITY'.bold,
                                               'STATE'.bold,
-                                              #'ADDRESS',
+                                              'ADDRESS'.bold,
                                               'PHONE'.bold],
                                               :rows => rows
     puts table
   end
 
   def queue_print_by(attribute)
-
+    @queue.sort_by! do |entry|
+      entry.send(attribute)
+    end
+    queue_print
   end
 
   def queue_save_to(filename)
@@ -95,13 +101,15 @@ class CLI
       csv.puts
         rows = []
         @queue.each do |a|
-          rows << ["#{a.last_name.capitalize}",
+          rows << ["#{a.id}",
+                   "#{a.regdate}",
+                   "#{a.last_name.capitalize}",
                    "#{a.first_name.capitalize}",
-                   #"#{a.email}",
+                   "#{a.email}",
                    "#{a.zipcode}",
                    "#{a.city.capitalize}",
                    "#{a.state}",
-                   #"#{a.address}",
+                   "#{a.address}",
                    "#{a.phone}"]
         end
         table = Terminal::Table.new :headings => ['LAST NAME'.bold,
@@ -136,7 +144,7 @@ class CLI
       when "queue_count" then queue_count
       when "queue_clear" then queue_clear
       when "queue_print" then queue_print
-      # when "queue print by" print_by(attribute)
+      when "queue_print_by" then queue_print_by(parameter)
       when "queue_save_to" then queue_save_to(parameter)
       when "find" then find(parameter, argument)
       when "quit" then puts "Have a nice a day!"
