@@ -5,6 +5,7 @@ require 'terminal-table'
 require 'colorize'
 require 'csv'
 require './lib/queue_printer'
+require './lib/message_printer'
 
 class CLI
   attr_reader :data, :queue, :search, :table, :queue_print
@@ -23,18 +24,57 @@ class CLI
       MessagePrinter.new.help_load_message
     when "find"
       MessagePrinter.new.help_find_message
-    when "queue_count"
-      MessagePrinter.new.help_queue_count_message
-    when "queue clear"
-      MessagePrinter.new.help_queue_clear_message
-    when "queue print"
-      MessagePrinter.new.help_queue_print_message
-    when "print_by"
+    when "queue"
+      help_command(command[1..-1])
+    # when "queue clear"
+    #   MessagePrinter.new.help_queue_clear_message
+    # when "queue print"
+    #   MessagePrinter.new.help_queue_print_message
+    when "queue print_by"
       MessagePrinter.new.help_print_by_message
-    when "save_to"
+    when "queue save_to"
       MessagePrinter.new.help_save_to_message
     end
   end
+
+  def help_command(params)
+    command = params[1]
+
+    case command
+    when "count" then MessagePrinter.new.help_queue_count_message
+      # help_queue_command(parts[2..-1])
+    end
+  end
+
+  def help_queue_command(params)
+    command = instruction[2]
+
+    case command
+    when "count" then MessagePrinter.new.help_queue_count_message
+    when "clear" then MessagePrinter.new.help_queue_clear_message
+    when "print" then MessagePrinter.new.help_queue_print_message
+    when "save"  then MessagePrinter.new.help_queue_save_to_message
+    end
+  end
+
+  # def queue_command(params)
+  #   command = params[0]
+  #
+  #   case command
+  #   when "count" then queue_count
+  #   when "clear" then queue_clear
+  #   when "print" then queue_print_command(params[1..-1])
+  #   when "save"  then queue_save_to(params[2])
+  #   end
+  # end
+  #
+  # def queue_print_command(params)
+  #   if params.empty?
+  #     queue_print
+  #   else
+  #     queue_print_by(params[1])
+  #   end
+  # end
 
   def load(filename)
     filename = './event_attendees.csv' if filename == nil
