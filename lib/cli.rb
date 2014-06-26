@@ -59,11 +59,17 @@ class CLI
   def find(attribute, criteria)
     @queue = []
     criteria = criteria.each {|c| c.downcase}.join(' ')
-    results = search.send("find_by_#{attribute}", criteria)
-    @queue << results
-    @queue.flatten!
-    puts "The queue has been loaded with the results of your search for '#{attribute}': #{criteria}'.\n".cyan +
-    "There were #{queue.count} results.\n".bold.cyan
+    if search.nil?
+      puts "A file must first be loaded to execute a search:".cyan
+      puts "use load <filename>".bold.magenta
+      puts "then try your serach again".cyan
+    else
+      results = search.send("find_by_#{attribute}", criteria)
+      @queue << results
+      @queue.flatten!
+      puts "The queue has been loaded with the results of your search for '#{attribute}': #{criteria}'.\n".cyan +
+      "There were #{queue.count} results.\n".bold.cyan
+    end
   end
 
   def queue_count
