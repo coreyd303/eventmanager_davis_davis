@@ -11,13 +11,13 @@ class MessagePrinter
     "Welcome to Event Reporter's help section. If you would like more information on an available command, enter 'Command Help' followed by the command name.\n" +
     "Here are the commands available to you:\n" +
     "\n" +
-    "'load'\n".cyan.bold +
-    "'find'\n".cyan.bold +
-    "'queue count'\n".cyan.bold +
-    "'queue clear'\n".cyan.bold +
-    "'queue print'\n".cyan.bold +
-    "'queue print_by'\n".cyan.bold +
-    "'queue save_to'\n".cyan.bold
+    "'load'\n" +
+    "'find'\n" +
+    "'queue count'\n" +
+    "'queue clear'\n" +
+    "'queue print'\n" +
+    "'queue print_by'\n"+
+    "'queue save_to'\n"
   end
 
   def help_load_message
@@ -49,11 +49,6 @@ class MessagePrinter
   end
 
   def queue_clear_message
-    print "The queue has been cleared.".cyan
+    print "The queue has been cleared.".magenta
   end
-
-  def load_file_message(filename)
-    puts "Your file, #{filename}, has been loaded.".cyan
-  end
-
 end
