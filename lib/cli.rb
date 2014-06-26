@@ -15,7 +15,6 @@ class CLI
     @search = nil
   end
 
-
   def help(command)
     case command
     when nil
@@ -84,32 +83,45 @@ class CLI
     puts "Your queue has been save to '#{filename}'.".bold.blue
   end
 
+  def queue_command(params)
+    command = params[0]
+
+    case command
+    when "count" then queue_count
+    when "clear" then queue_clear
+    when "print" then queue_print_command(params[1..-1])
+    when "save"  then queue_save_to(params[2])
+    end
+  end
+
+  def queue_print_command(params)
+    if params.empty?
+      queue_print
+    else
+      queue_print_by(params[1])
+    end
+  end
+
   def run
     MessagePrinter.new.run_welcome_message
     command = ""
     until @command == "quit"
       puts ""
       printf "Enter Command: "
-      input = gets.strip
+      input = gets.downcase.strip
       parts = input.split(" ")
       @command = parts[0]
       parameter = parts[1]
       argument = parts[2..-1]
       case @command
-      when "help" then help(parameter)
-      when "load" then load(parts[1])
-      #needs to accept "queue count"
-      when "queue count" then queue_count
-      when "queue_clear" then queue_clear
-      when "queue_print" then queue_print
-      when "queue_print_by" then queue_print_by(parameter)
-      when "queue_save_to" then queue_save_to(parameter)
-      when "find" then find(parameter, argument)
-      when "quit" then puts "Have a nice a day!"
+      when "help"  then help(parameters)
+      when "load"  then load(parts[1])
+      when "queue" then queue_command(parts[1..-1])
+      when "find"  then find(parameter, argument)
+      when "quit"  then puts "Have a nice a day!"
       else
         puts "Sorry, #{@command} is an invalid command."
       end
     end
   end
-
 end
