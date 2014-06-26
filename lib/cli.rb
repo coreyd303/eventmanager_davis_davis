@@ -23,7 +23,7 @@ class CLI
       MessagePrinter.new.help_load_message
     when "find"
       MessagePrinter.new.help_find_message
-    when "queue count"
+    when "queue_count"
       MessagePrinter.new.help_queue_count_message
     when "queue clear"
       MessagePrinter.new.help_queue_clear_message
@@ -114,7 +114,7 @@ class CLI
       parameter = parts[1]
       argument = parts[2..-1]
       case @command
-      when "help"  then help(parameters)
+      when "help"  then help(parameter)
       when "load"  then load(parts[1])
       when "queue" then queue_command(parts[1..-1])
       when "find"  then find(parameter, argument)
