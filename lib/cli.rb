@@ -23,18 +23,36 @@ class CLI
       MessagePrinter.new.help_load_message
     when "find"
       MessagePrinter.new.help_find_message
-    when "queue count"
-      MessagePrinter.new.help_queue_count_message
-    when "queue clear"
-      MessagePrinter.new.help_queue_clear_message
-    when "queue print"
-      MessagePrinter.new.help_queue_print_message
+    # when "queue count"
+    #   MessagePrinter.new.help_queue_count_message
+    # when "queue clear"
+    #   MessagePrinter.new.help_queue_clear_message
+    # when "queue print"
+    #   MessagePrinter.new.help_queue_print_message
     when "print_by"
       MessagePrinter.new.help_print_by_message
     when "save_to"
       MessagePrinter.new.help_save_to_message
     end
   end
+
+  def help_command(params)
+    command = params[0]
+
+    case command
+    when "count" then queue_count
+    when "clear" then queue_clear
+    when "print" then queue_print_command(params[1..-1])
+    when "save"  then queue_save_to(params[2])
+    end
+  end
+
+  # when "queue count"
+  #   MessagePrinter.new.help_queue_count_message
+  # when "queue clear"
+  #   MessagePrinter.new.help_queue_clear_message
+  # when "queue print"
+  #   MessagePrinter.new.help_queue_print_message
 
   def load(filename)
     filename = './event_attendees.csv' if filename == nil
@@ -114,7 +132,7 @@ class CLI
       parameter = parts[1]
       argument = parts[2..-1]
       case @command
-      when "help"  then help(parameters)
+      when "help"  then help(parameter)
       when "load"  then load(parts[1])
       when "queue" then queue_command(parts[1..-1])
       when "find"  then find(parameter, argument)
