@@ -16,7 +16,7 @@ class QueuePrinter
              "#{a.email}",
              "#{a.zipcode}",
              "#{a.city.capitalize}",
-             "#{a.state}",
+             "#{a.state.upcase}",
              "#{a.address}",
              "#{a.phone}"]
     end
