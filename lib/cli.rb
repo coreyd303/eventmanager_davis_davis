@@ -19,7 +19,7 @@ class CLI
   def help(command, argument)
     case command
     when nil
-      MessagePrinter.new.help_message
+      help_queue_commands(argument)
     when "load"
       MessagePrinter.new.help_load_message
     when "find"
@@ -32,6 +32,8 @@ class CLI
   end
 
   def help_queue_commands(argument)
+    return MessagePrinter.new.help_message if argument.nil?
+    argument = argument[0]
     case argument
     when "count" then MessagePrinter.new.help_queue_count_message
     when "clear" then MessagePrinter.new.help_queue_clear_message
@@ -40,25 +42,13 @@ class CLI
     end
   end
 
-  def help_command(params)
-    command = params[1]
-
-    case command
-    when "queue" then help_queue_command
-      # help_queue_command(parts[2..-1])
-    end
-  end
-
-  def help_queue_command(params)
-    command = instruction[2]
-
-    case command
-    when "count" then MessagePrinter.new.help_queue_count_message
-    when "clear" then MessagePrinter.new.help_queue_clear_message
-    when "print" then MessagePrinter.new.help_queue_print_message
-    when "save"  then MessagePrinter.new.help_queue_save_to_message
-    end
-  end
+  # def help_queue_print_command(params)
+  #   if params.empty?
+  #     queue_print
+  #   else
+  #     queue_print_by(params[1])
+  #   end
+  # end
 
   def load(filename)
     filename = './event_attendees.csv' if filename == nil
@@ -132,13 +122,13 @@ class CLI
     until @command == "quit"
       puts ""
       printf "Enter Command: "
-      input = gets.downcase.strip
-      parts = input.split(" ")
-      @command = parts[0]
+      input     = gets.downcase.strip
+      parts     = input.split(" ")
+      @command  = parts[0]
       parameter = parts[1]
-      argument = parts[2..-1]
+      argument  = parts[2..-1]
       case @command
-      when "help"  then help(parameter, argument.first)
+      when "help"  then help(parameter, argument)
       when "load"  then load(parts[1])
       when "queue" then queue_command(parts[1..-1])
       when "find"  then find(parameter, argument)
