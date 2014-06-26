@@ -8,16 +8,16 @@ class MessagePrinter
 
   def help_message
     print "\n" +
-    "Welcome to Event Reporter's help section. If you would like more information on an available command, enter 'Command Help' followed by the command name.\n" +
-    "Here are the commands available to you:\n" +
+    "Welcome to Event Reporter's help section. If you would like more information on an available command, enter 'Command Help' followed by the command name.\n".bold.blue +
+    "Here are the commands available to you:\n".blue +
     "\n" +
-    "'load'\n" +
-    "'find'\n" +
-    "'queue count'\n" +
-    "'queue clear'\n" +
-    "'queue print'\n" +
-    "'queue print_by'\n"+
-    "'queue save_to'\n"
+    "'load'\n".cyan +
+    "'find'\n".cyan +
+    "'queue count'\n".cyan +
+    "'queue clear'\n".cyan +
+    "'queue print'\n".cyan +
+    "'queue print_by'\n".cyan+
+    "'queue save_to'\n".cyan
   end
 
   def help_load_message
