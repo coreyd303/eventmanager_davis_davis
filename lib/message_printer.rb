@@ -51,4 +51,5 @@ class MessagePrinter
   def queue_clear_message
     print "The queue has been cleared.".magenta
   end
+
 end

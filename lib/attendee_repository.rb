@@ -12,4 +12,5 @@ class AttendeeRepository
       @attendees << Attendee.new(row)
     end
   end
+  
 end

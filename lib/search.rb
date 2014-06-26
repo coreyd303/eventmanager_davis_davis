@@ -35,4 +35,5 @@ class Search
   def clear
     @results = []
   end
+
 end

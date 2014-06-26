@@ -1,14 +1,18 @@
-require './lib/attendee_repository'
-require './lib/search'
-require 'pry'
+require 'csv'
 require 'terminal-table'
 require 'colorize'
-require 'csv'
+require './lib/attendee_repository'
+require './lib/search'
 require './lib/queue_printer'
 require './lib/message_printer'
 
 class CLI
-  attr_reader :data, :queue, :search, :table, :queue_print
+  attr_reader :data,
+              :queue,
+              :search,
+              :table,
+              :queue_print
+
   attr_writer :filename
 
   def initialize
@@ -18,22 +22,18 @@ class CLI
 
   def help(command, argument)
     case command
-    when nil
-      help_queue_commands(argument)
-    when "load"
-      MessagePrinter.new.help_load_message
-    when "find"
-      MessagePrinter.new.help_find_message
-    when "queue"
-      help_queue_commands(argument)
-    when "queue print_by"
-      MessagePrinter.new.help_print_by_message
+    when nil     then help_queue_commands(argument)
+    when "load"  then MessagePrinter.new.help_load_message
+    when "find"  then MessagePrinter.new.help_find_message
+    when "queue" then help_queue_commands(argument)
+    when "queue print_by" then MessagePrinter.new.help_print_by_message
     end
   end
 
   def help_queue_commands(argument)
     return MessagePrinter.new.help_message if argument.nil?
     argument = argument[0]
+
     case argument
     when "count" then MessagePrinter.new.help_queue_count_message
     when "clear" then MessagePrinter.new.help_queue_clear_message
@@ -41,14 +41,6 @@ class CLI
     when "save"  then MessagePrinter.new.help_queue_save_to_message
     end
   end
-
-  # def help_queue_print_command(params)
-  #   if params.empty?
-  #     queue_print
-  #   else
-  #     queue_print_by(params[1])
-  #   end
-  # end
 
   def load(filename)
     filename = './event_attendees.csv' if filename == nil
@@ -60,9 +52,8 @@ class CLI
     @queue = []
     criteria = criteria.each {|c| c.downcase}.join(' ')
     if search.nil?
-      puts "A file must first be loaded to execute a search:".cyan
-      puts "use load <filename>".bold.magenta
-      puts "then try your serach again".cyan
+      print "A file must first be loaded to execute a search:\n".cyan +
+      "Use ".cyan + "'load <filename>'".bold.magenta + ", then try your search again.".cyan
     else
       results = search.send("find_by_#{attribute}", criteria)
       @queue << results
@@ -93,7 +84,6 @@ class CLI
   end
 
   def queue_save_to(filename)
-    #CSVBuilder.new(@queue, filename).save_to_csv
     CSV.open(filename, "w") do |csv|
       csv << ['ID','REGDATE','LAST NAME','FIRST NAME','EMAIL','ZIPCODE','CITY','STATE','ADDRESS','PHONE']
       queue.each do |entry|
@@ -144,4 +134,5 @@ class CLI
       end
     end
   end
+  
 end

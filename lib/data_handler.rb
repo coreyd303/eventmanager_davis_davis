@@ -55,4 +55,5 @@ class DataHandler
       zipcode
     end
   end
+
 end

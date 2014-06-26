@@ -26,4 +26,5 @@ class Attendee
     @state       = handler.clean_state(row[:state])
     @zipcode     = handler.clean_zipcode(row[:zipcode])
   end
+  
 end

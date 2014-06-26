@@ -16,4 +16,5 @@ class CSVBuilder
     end
     puts "Your queue has been save to '#{filename}'.".bold.blue
   end
+  
 end
