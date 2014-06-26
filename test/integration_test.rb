@@ -13,10 +13,4 @@ class Integration_Test < Minitest::Test
     cli = CLI.new
     assert_equal 0, cli.queue.count
   end
-
-  def test_it_can_output_help_text
-    cli = CLI.new
-    assert_equal "Output how many records are in the current queue.", cli.run("queue", "count")
-  end
-
 end
