@@ -62,7 +62,7 @@ class CLI
     results = search.send("find_by_#{attribute}", criteria)
     @queue << results
     @queue.flatten!
-    puts "The queue has been loaded with the results of your search for '#{attribute}':  '#{criteria}'.\n".cyan +
+    puts "The queue has been loaded with the results of your search for '#{attribute}': #{criteria}'.\n".cyan +
     "There were #{queue.count} results.\n".bold.cyan
   end
 
@@ -94,7 +94,7 @@ class CLI
         csv << [entry.id,entry.regdate,entry.last_name,entry.first_name,entry.email,entry.zipcode,entry.city,entry.state,entry.address,entry.phone]
       end
     end
-    puts "Your queue has been save to '#{filename}'.".bold.cyan
+    puts "Your queue has been saved to '#{filename}'.".bold.cyan
   end
 
   def queue_command(params)
