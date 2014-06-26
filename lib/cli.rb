@@ -94,7 +94,7 @@ class CLI
         csv << [entry.id,entry.regdate,entry.last_name,entry.first_name,entry.email,entry.zipcode,entry.city,entry.state,entry.address,entry.phone]
       end
     end
-    puts "Your queue has been saved to '#{filename}'.".bold.cyan
+    puts "Your queue has been save to '#{filename}'.".bold.cyan
   end
 
   def queue_command(params)
