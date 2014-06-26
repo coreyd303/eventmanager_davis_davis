@@ -60,25 +60,6 @@ class CLI
     end
   end
 
-  # def queue_command(params)
-  #   command = params[0]
-  #
-  #   case command
-  #   when "count" then queue_count
-  #   when "clear" then queue_clear
-  #   when "print" then queue_print_command(params[1..-1])
-  #   when "save"  then queue_save_to(params[2])
-  #   end
-  # end
-  #
-  # def queue_print_command(params)
-  #   if params.empty?
-  #     queue_print
-  #   else
-  #     queue_print_by(params[1])
-  #   end
-  # end
-
   def load(filename)
     filename = './event_attendees.csv' if filename == nil
     @search = Search.new(filename)
