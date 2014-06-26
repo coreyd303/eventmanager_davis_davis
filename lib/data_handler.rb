@@ -43,7 +43,7 @@ class DataHandler
   end
 
   def clean_state(state)
-    state.to_s.upcase
+    state.to_s.downcase
   end
 
   def clean_zipcode(zipcode)
