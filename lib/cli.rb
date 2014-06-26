@@ -26,23 +26,17 @@ class CLI
       MessagePrinter.new.help_find_message
     when "queue"
       help_queue_commands(argument)
-    # when "queue clear"
-    #   MessagePrinter.new.help_queue_clear_message
-    # when "queue print"
-    #   MessagePrinter.new.help_queue_print_message
     when "queue print_by"
       MessagePrinter.new.help_print_by_message
-    when "queue save_to"
-      MessagePrinter.new.help_save_to_message
     end
   end
 
   def help_queue_commands(argument)
     case argument
-    when "count"
-      puts "I am counting"
-    when "clear"
-      puts "I am clearing"
+    when "count" then MessagePrinter.new.help_queue_count_message
+    when "clear" then MessagePrinter.new.help_queue_clear_message
+    when "print" then MessagePrinter.new.help_queue_print_message
+    when "save"  then MessagePrinter.new.help_queue_save_to_message
     end
   end
 
