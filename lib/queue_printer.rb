@@ -9,16 +9,16 @@ class QueuePrinter
   def print
     rows = []
     queue.each do |a|
-    rows << ["#{a.id}",
-             "#{a.regdate}",
-             "#{a.last_name.capitalize}",
-             "#{a.first_name.capitalize}",
-             "#{a.email}",
-             "#{a.zipcode}",
-             "#{a.city.capitalize}",
-             "#{a.state.upcase}",
-             "#{a.address}",
-             "#{a.phone}"]
+    rows << ["#{a.id}".light_blue,
+             "#{a.regdate}".cyan,
+             "#{a.last_name.capitalize}".yellow.bold,
+             "#{a.first_name.capitalize}".yellow.bold,
+             "#{a.email}".cyan.bold,
+             "#{a.zipcode}".cyan,
+             "#{a.city.capitalize}".cyan,
+             "#{a.state.upcase}".cyan,
+             "#{a.address}".cyan,
+             "#{a.phone}".cyan]
     end
     table = Terminal::Table.new :headings => ['ID'.bold,
                                               'REGDATE'.bold,
