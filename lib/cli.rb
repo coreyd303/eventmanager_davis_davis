@@ -28,19 +28,19 @@ class CLI
       "'queue print_by'\n" +
       "'queue save_to'\n"
     elsif command == "load"
-      print "Erase any loaded data and parse the specified file. If no filename is given, default to 'event_attendees.csv'."
+      "Erase any loaded data and parse the specified file. If no filename is given, default to 'event_attendees.csv'."
     elsif command == "find"
-      print "Load the queue with all records matching the criteria for the given attribute."
+      "Load the queue with all records matching the criteria for the given attribute."
     elsif command == "queue count"
-      print "Output how many records are in the current queue."
+      "Output how many records are in the current queue."
     elsif command == "queue clear"
-      print "Empty the queue."
+      "Empty the queue."
     elsif command == "queue print"
       "Print out a tab-delimited data table."
     elsif command == "print_by"
-      print "Print the data table sorted by the specified attribute."
+      "Print the data table sorted by the specified attribute."
     elsif command == "save_to"
-      print "Export the current queue to the specified filename as a CSV."
+      "Export the current queue to the specified filename as a CSV."
     end
   end
 
@@ -128,7 +128,7 @@ class CLI
     when "count" then queue_count
     when "clear" then queue_clear
     when "print" then queue_print_command(params[1..-1])
-    when "save" then queue_save_to(params[2])
+    when "save"  then queue_save_to(params[2])
     end
   end
 
@@ -136,7 +136,6 @@ class CLI
     if params.empty?
       queue_print
     else
-      # TODO: Deal with
       queue_print_by(params[1])
     end
   end
@@ -153,11 +152,11 @@ class CLI
       parameter = parts[1]
       argument = parts[2..-1]
       case @command
-      when "help" then help(parameter)
-      when "load" then load(parts[1])
+      when "help"  then help(parameters)
+      when "load"  then load(parts[1])
       when "queue" then queue_command(parts[1..-1])
-      when "find" then find(parameter, argument)
-      when "quit" then puts "Have a nice a day!"
+      when "find"  then find(parameter, argument)
+      when "quit"  then puts "Have a nice a day!"
       else
         puts "Sorry, #{@command} is an invalid command."
       end
