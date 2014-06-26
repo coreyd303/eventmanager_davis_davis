@@ -1,0 +1,8 @@
+require './lib/search'
+require './lib/queue_printer'
+require './lib/message_printer'
+require './lib/data_handler'
+require './lib/csv_builder'
+require './lib/cli'
+require './lib/attendee'
+require './lib/attendee_repository'

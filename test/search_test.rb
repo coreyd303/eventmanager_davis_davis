@@ -2,7 +2,7 @@ require 'csv'
 gem 'minitest', '~>5.2'
 require 'minitest/autorun'
 require 'minitest/pride'
-require './lib/search'
+require './test_helper'
 
 class SearchTest < Minitest::Test
   attr_reader :search, :results

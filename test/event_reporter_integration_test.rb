@@ -1,9 +1,7 @@
 gem 'minitest', '~>5.2'
 require 'minitest/autorun'
 require 'minitest/pride'
-require './lib/event_reporter'
-# require './lib/data_handler'
-# require './lib/attendee_repository'
+require './test_helper'
 
 class EventReporterIntegrationTest < Minitest::Test
 

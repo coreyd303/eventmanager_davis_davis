@@ -1,7 +1,7 @@
 gem 'minitest', '~>5.2'
 require 'minitest/autorun'
 require 'minitest/pride'
-require './lib/data_handler'
+require './test_helper'
 
 class DataHandlerTest < Minitest::Test
   attr_reader :data_handler
