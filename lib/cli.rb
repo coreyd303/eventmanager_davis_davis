@@ -4,6 +4,7 @@ require 'pry'
 require 'terminal-table'
 require 'colorize'
 require 'csv'
+require './lib/queue_printer'
 
 class CLI
   attr_reader :data, :queue, :search, :table, :queue_print
@@ -14,56 +15,42 @@ class CLI
     @search = nil
   end
 
-  def help(command)
-    if command == nil
-      print "\n" +
-      "Welcome to Event Reporter's help section. If you would like more information on an available command, enter 'Command Help' followed by the command name.\n" +
-      "Here are the commands available to you:\n" +
-      "\n" +
-      "'load'\n" +
-      "'find'\n" +
-      "'queue count'\n" +
-      "'queue clear'\n" +
-      "'queue print'\n" +
-      "'queue print_by'\n" +
-      "'queue save_to'\n"
-    elsif command == "load"
-      print "Erase any loaded data and parse the specified file. If no filename is given, default to 'event_attendees.csv'."
-    elsif command == "find"
-      print "Load the queue with all records matching the criteria for the given attribute."
-    elsif command == "queue count"
-      print "Output how many records are in the current queue."
-    elsif command == "queue clear"
-      print "Empty the queue."
-    elsif command == "queue print"
-      "Print out a tab-delimited data table."
-    elsif command == "print_by"
 
-    elsif command == "save_to"
+  def help(command)
+    case command
+    when nil
+      MessagePrinter.new.help_message
+    when "load"
+      MessagePrinter.new.help_load_message
+    when "find"
+      MessagePrinter.new.help_find_message
+    when "queue count"
+      MessagePrinter.new.help_queue_count_message
+    when "queue clear"
+      MessagePrinter.new.help_queue_clear_message
+    when "queue print"
+      MessagePrinter.new.help_queue_print_message
+    when "print_by"
+      MessagePrinter.new.help_print_by_message
+    when "save_to"
+      MessagePrinter.new.help_save_to_message
     end
   end
 
   def load(filename)
-    if filename == nil
-      filename = './event_attendees.csv'
-    else
-      filename = filename
-    end
+    filename = './event_attendees.csv' if filename == nil
     @search = Search.new(filename)
-    puts "Your file, #{filename}, has been loaded."
+    puts "Your file, #{filename}, has been loaded.".bold.blue
   end
 
   def find(attribute, criteria)
     @queue = []
-    criteria = criteria.each do |c|
-      c.downcase
-    end
-    criteria = criteria.join(' ')
+    criteria = criteria.each {|c| c.downcase}.join(' ')
     results = search.send("find_by_#{attribute}", criteria)
     @queue << results
     @queue.flatten!
-    print "The queue has been loaded with the results of your search for '#{attribute}' '#{criteria}'.\n" +
-    "There were #{queue.count} results.\n"
+    puts "The queue has been loaded with the results of your search for '#{attribute}':  '#{criteria}'.\n" +
+    "There were #{queue.count} results.\n".bold.blue
   end
 
   def queue_count
@@ -72,35 +59,11 @@ class CLI
 
   def queue_clear
     @queue = []
-    print "The queue has been cleared."
+    MessagePrinter.new.queue_clear_message
   end
 
   def queue_print
-    rows = []
-    @queue.each do |a|
-    rows << ["#{a.id}",
-             "#{a.regdate}",
-             "#{a.last_name.capitalize}",
-             "#{a.first_name.capitalize}",
-             "#{a.email}",
-             "#{a.zipcode}",
-             "#{a.city.capitalize}",
-             "#{a.state}",
-             "#{a.address}",
-             "#{a.phone}"]
-    end
-    table = Terminal::Table.new :headings => ['ID'.bold,
-                                              'REGDATE'.bold,
-                                              'LAST NAME'.bold,
-                                              'FIRST NAME'.bold,
-                                              'EMAIL'.bold,
-                                              'ZIPCODE'.bold,
-                                              'CITY'.bold,
-                                              'STATE'.bold,
-                                              'ADDRESS'.bold,
-                                              'PHONE'.bold],
-                                              :rows => rows
-    puts table
+    QueuePrinter.new(@queue).print
   end
 
   def queue_print_by(attribute)
@@ -111,17 +74,18 @@ class CLI
   end
 
   def queue_save_to(filename)
+    #CSVBuilder.new(@queue, filename).save_to_csv
     CSV.open(filename, "w") do |csv|
       csv << ['ID','REGDATE','LAST NAME','FIRST NAME','EMAIL','ZIPCODE','CITY','STATE','ADDRESS','PHONE']
       queue.each do |entry|
         csv << [entry.id,entry.regdate,entry.last_name,entry.first_name,entry.email,entry.zipcode,entry.city,entry.state,entry.address,entry.phone]
       end
     end
-    puts "Your queue has been save to '#{filename}'."
+    puts "Your queue has been save to '#{filename}'.".bold.blue
   end
 
   def run
-    puts "Welcome to Event Reporter. Enter 'help' for a list of available commands."
+    MessagePrinter.new.run_welcome_message
     command = ""
     until @command == "quit"
       puts ""
