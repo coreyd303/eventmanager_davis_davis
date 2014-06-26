@@ -2,7 +2,7 @@ class MessagePrinter
 
   def run_welcome_message
     puts ''
-    print "Welcome to Event Reporter. Enter 'help' for a list of available commands.".blue.bold
+    print "Welcome to Event Reporter. Enter 'help' for a list of available commands.".cyan.bold
     puts ''
   end
 
@@ -49,11 +49,11 @@ class MessagePrinter
   end
 
   def queue_clear_message
-    print "The queue has been cleared."
+    print "The queue has been cleared.".cyan
   end
 
   def load_file_message(filename)
-    puts "Your file, #{filename}, has been loaded."
+    puts "Your file, #{filename}, has been loaded.".cyan
   end
 
 end

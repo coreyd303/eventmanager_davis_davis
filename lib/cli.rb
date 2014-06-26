@@ -16,7 +16,7 @@ class CLI
     @search = nil
   end
 
-  def help(command)
+  def help(command, argument)
     case command
     when nil
       MessagePrinter.new.help_message
@@ -25,7 +25,7 @@ class CLI
     when "find"
       MessagePrinter.new.help_find_message
     when "queue"
-      help_command(command[1..-1])
+      help_queue_commands(argument)
     # when "queue clear"
     #   MessagePrinter.new.help_queue_clear_message
     # when "queue print"
@@ -37,11 +37,20 @@ class CLI
     end
   end
 
+  def help_queue_commands(argument)
+    case argument
+    when "count"
+      puts "I am counting"
+    when "clear"
+      puts "I am clearing"
+    end
+  end
+
   def help_command(params)
     command = params[1]
 
     case command
-    when "count" then MessagePrinter.new.help_queue_count_message
+    when "queue" then help_queue_command
       # help_queue_command(parts[2..-1])
     end
   end
@@ -79,7 +88,7 @@ class CLI
   def load(filename)
     filename = './event_attendees.csv' if filename == nil
     @search = Search.new(filename)
-    puts "Your file, #{filename}, has been loaded.".bold.blue
+    puts "Your file, #{filename}, has been loaded.".bold.cyan
   end
 
   def find(attribute, criteria)
@@ -88,8 +97,8 @@ class CLI
     results = search.send("find_by_#{attribute}", criteria)
     @queue << results
     @queue.flatten!
-    puts "The queue has been loaded with the results of your search for '#{attribute}':  '#{criteria}'.\n" +
-    "There were #{queue.count} results.\n".bold.blue
+    puts "The queue has been loaded with the results of your search for '#{attribute}':  '#{criteria}'.\n".cyan +
+    "There were #{queue.count} results.\n".bold.cyan
   end
 
   def queue_count
@@ -120,7 +129,7 @@ class CLI
         csv << [entry.id,entry.regdate,entry.last_name,entry.first_name,entry.email,entry.zipcode,entry.city,entry.state,entry.address,entry.phone]
       end
     end
-    puts "Your queue has been save to '#{filename}'.".bold.blue
+    puts "Your queue has been save to '#{filename}'.".bold.cyan
   end
 
   def queue_command(params)
@@ -154,11 +163,11 @@ class CLI
       parameter = parts[1]
       argument = parts[2..-1]
       case @command
-      when "help"  then help(parameter)
+      when "help"  then help(parameter, argument.first)
       when "load"  then load(parts[1])
       when "queue" then queue_command(parts[1..-1])
       when "find"  then find(parameter, argument)
-      when "quit"  then puts "Have a nice a day!"
+      when "quit"  then puts "Have a nice a day!".cyan
       else
         puts "Sorry, #{@command} is an invalid command."
       end
